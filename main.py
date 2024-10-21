@@ -49,3 +49,16 @@ async def user_timeline(user_name: str, tweet: dict):
   }
   tweets.append(new_tweet)
   return new_tweet
+
+
+@app.get("/{user_name}/{timestamp}")
+async def user_timeline(user_name: str, timestamp: dict, tweet: dict):
+    tweet_to_update = next((_tweet for _tweet in tweet if _tweet["timestamp"] == timestamp and _tweet["user_name"] == user_name),None)
+
+if not tweet_to_update: 
+    return {
+        "error": f"Tweet with timestamp: {timestamp}, and user_name: {user_name} not found"
+    }
+    tweet_to_update["tweet"] = tweet["tweet"]
+    tweet_to_update["edited_timestamp"] = get_timestamp()
+    return tweet_to_update
