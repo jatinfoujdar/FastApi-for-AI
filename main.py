@@ -29,8 +29,16 @@ async def twittertimeline():
     return tweets
 
 @app.get("/{user_name}")
-async def twittertimeline(user_name: str):
+async def user_timeline(user_name: str):
     user_tweets = [tweet for tweet in tweets if tweet["user_name"] = user_name]
     if not user_tweets:
         return {"error" : f"user: {user_name} not found"}
         return user_tweets
+
+
+@app.post("/{user_name}")
+async def user_timeline(user_name: str, tweet: dict):
+  user_tweets = [tweet for tweet in tweets if tweet["user_name"] = user_name]
+  if not user_tweets:
+    return {"error": f"user : {user_name} not found"}
+    return user_tweets
